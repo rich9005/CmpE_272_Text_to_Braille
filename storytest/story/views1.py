@@ -18,7 +18,7 @@ print 'hi'
 #print article.summary
 
 
-y = "<table border=1>"
+y = "<center><h2>Top News</h2></center><table border=1>"
 start1 = "<tr><td>"
 start2 = "</td><td>"
 i = 1
