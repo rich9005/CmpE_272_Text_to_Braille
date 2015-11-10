@@ -21,5 +21,5 @@ from django.conf.urls import patterns, include , url
 #]
 
 urlpatterns = patterns('',
-	url(r'^$','story.views1.home',name='home'),
+	url(r'^$','story.views2.home',name='home'),
 	)

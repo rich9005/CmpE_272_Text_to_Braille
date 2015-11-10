@@ -43,4 +43,5 @@ def home(request):
 	#x = "<table> <tr><td>1</td><td>thisi is one</td></tr><tr><td>2</td><td>this is two</td></tr>"
 	#abc = y + z
 	return HttpResponse(abc)
-	#return render_to_response("story/home.html", {'hello': x})
+def home(request):
+	return render_to_response("story/home.html", {'hello': abc})
