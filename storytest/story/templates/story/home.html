@@ -1,8 +1,23 @@
+
+
 {% extends "story/base.html" %}
 {% block content  %}
+
+
+hie rich
 <table border='1'><tr><td>
 {{ hello }} 
 </td><tr><td>{{ bye }}</td></tr></table><br><br>
-<br><input type=button size=30 value="Previous">
-<input type=button size=30 value="Next">
+<br><input type=button id ='buttonId2' size=30 value="Previous">
+<input type=button id='buttonId' size=30 value="Next" >
+<script type="text/javascript">
+    document.getElementById("buttonId").onclick = function () {
+        location.href = "/next/";
+        
+    };
+    document.getElementById("buttonId2").onclick = function () {
+        location.href = "/prev/";
+        
+    };
+</script>
 {% endblock %}

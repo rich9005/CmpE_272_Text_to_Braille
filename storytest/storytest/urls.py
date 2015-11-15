@@ -21,5 +21,7 @@ from django.conf.urls import patterns, include , url
 #]
 
 urlpatterns = patterns('',
-	url(r'^$','story.views2.home',name='home'),
+	url(r'^$','story.views3.home',name='home'),
+	url(r'^next/$','story.views3.clickNext',name='clickNext'),
+	url(r'^prev/$','story.views3.clickPrevious',name='clickPrevious'),
 	)
