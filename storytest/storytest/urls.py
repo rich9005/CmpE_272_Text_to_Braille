@@ -24,4 +24,5 @@ urlpatterns = patterns('',
 	url(r'^$','story.views3.home',name='home'),
 	url(r'^next/$','story.views3.clickNext',name='clickNext'),
 	url(r'^prev/$','story.views3.clickPrevious',name='clickPrevious'),
+    
 	)

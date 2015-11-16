@@ -1,15 +1,20 @@
 
 
 {% extends "story/base.html" %}
+
 {% block content  %}
 
-
+{% load staticfiles %}
 hie rich
 <table border='1'><tr><td>
 {{ hello }} 
-</td><tr><td>{{ bye }}</td></tr></table><br><br>
+</td><tr><td><img src="{% static  'a_br.jpg' %}" alt=""  height=100 width=100 /></td></tr></table><br><br>
 <br><input type=button id ='buttonId2' size=30 value="Previous">
 <input type=button id='buttonId' size=30 value="Next" >
+<img src="{% static 'a_br.jpg' %}" alt=""  height=100 width=100 />
+<br>=====================<br>
+{{ bye }}
+
 <script type="text/javascript">
     document.getElementById("buttonId").onclick = function () {
         location.href = "/next/";
