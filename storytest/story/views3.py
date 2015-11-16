@@ -45,7 +45,7 @@ rowss = re.sub(r'\W+', ' ', str(rows))
 print rowss
 
 rowss_value = "Test braille values"
-# need dynamic display of text
+
 #rowss_value = "'<img src="{% static 'a_br.jpg' %}" alt=""  height=100 width=100 />'"
 #def home(request):
 #	return HttpResponse("Hello world!")
