@@ -44,9 +44,10 @@ rows = cursor.fetchall()
 rowss = re.sub(r'\W+', ' ', str(rows))
 print rowss
 
-rowss_value = "Test braille values"
-
-#rowss_value = "'<img src="{% static 'a_br.jpg' %}" alt=""  height=100 width=100 />'"
+#rowss_value = "Test braille values"
+image_string = "/static/a_br.jpg /static/b_br.jpg"
+image_array = image_string.split()
+print(image_array)
 #def home(request):
 #	return HttpResponse("Hello world!")
 # Create your views here.
@@ -67,7 +68,7 @@ def clickNext(request):
 		#return HttpResponse("abc")
 		print ("=====================================hrichrichrichNEXTheheheh==============================")
 		#print rowss
-		return render_to_response("story/home.html", {'hello': rowss, 'bye' : rowss_value})
+		return render_to_response("story/home.html", {'hello': rowss, 'bye' : image_array})
 		#home()
 
 
@@ -81,7 +82,7 @@ def clickPrevious(request):
 		#return HttpResponse("abc")
 		print ("=====================================richrichrihPREVPREV==============================")
 		#print rowss
-		return render_to_response("story/home.html", {'hello': rowss, 'bye' : rowss_value})
+		return render_to_response("story/home.html", {'hello': rowss, 'bye' : image_array})
 
 def home(request):
-	return render_to_response("story/home.html", {'hello': rowss, 'bye' : rowss_value})
+	return render_to_response("story/home.html", {'hello': rowss, 'bye' : image_array})
