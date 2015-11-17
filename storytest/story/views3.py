@@ -33,7 +33,7 @@ for x in article.text.encode("utf-8").split("|"):
 #	try:
 		y = x
 		cursor.execute("insert into news(news_data) values (%s)",[y])
-		print ("Hi---",y)
+		#print ("Hi---",y)
 		db.commit()
 
 
@@ -44,10 +44,36 @@ rows = cursor.fetchall()
 rowss = re.sub(r'\W+', ' ', str(rows))
 print rowss
 
+testStr = " "
+rows_array  = rowss.split()
+for word in rows_array:
+	for c in word:
+		c_lower = c.lower()
+		tc = "/static/braille-alphabet-flashcard-"+c_lower+".jpg"
+		print tc
+		testStr += tc + " "
+	testStr += "/static/braille-alphabet-flashcard-space.jpg" + " "
+print (testStr)
+
+
+
 #rowss_value = "Test braille values"
-image_string = "/static/a_br.jpg /static/b_br.jpg"
-image_array = image_string.split()
-print(image_array)
+#image_string = "/static/a_br.jpg /static/b_br.jpg"
+def textToBraille(rowss):
+	testStr = " "
+	rows_array  = rowss.split()
+	for word in rows_array:
+		for c in word:
+			c_lower = c.lower()
+			tc = "/static/braille-alphabet-flashcard-"+c_lower+".jpg"
+			#print tc
+			testStr += tc + " "
+		testStr += "/static/braille-alphabet-flashcard-space.jpg" + " "
+
+	image_string = testStr
+	image_array = image_string.split()
+	print(image_array)
+	return image_array
 #def home(request):
 #	return HttpResponse("Hello world!")
 # Create your views here.
@@ -66,6 +92,7 @@ def clickNext(request):
 		rows = cursor.fetchall()
 		rowss = re.sub(r'\W+', ' ', str(rows))
 		#return HttpResponse("abc")
+		image_array = textToBraille(rowss)
 		print ("=====================================hrichrichrichNEXTheheheh==============================")
 		#print rowss
 		return render_to_response("story/home.html", {'hello': rowss, 'bye' : image_array})
@@ -80,9 +107,15 @@ def clickPrevious(request):
 		rows = cursor.fetchall()
 		rowss = re.sub(r'\W+', ' ', str(rows))
 		#return HttpResponse("abc")
+		image_array = textToBraille(rowss)
 		print ("=====================================richrichrihPREVPREV==============================")
 		#print rowss
 		return render_to_response("story/home.html", {'hello': rowss, 'bye' : image_array})
 
 def home(request):
+	global no
+	cursor.execute("select news_data from news where news_id =(%s)", [no])
+	rows = cursor.fetchall()
+	rowss = re.sub(r'\W+', ' ', str(rows))
+	image_array = textToBraille(rowss)
 	return render_to_response("story/home.html", {'hello': rowss, 'bye' : image_array})
