@@ -5,7 +5,7 @@
 {% block content  %}
 
 {% load staticfiles %}
- <span id='time'>rich</span> <br>
+<h1><font color ='green'>Huckelberry Finn in Braille </font></h1>
 <!--
 <input type=button id ='buttonId2' size=30 value="Previous">
 <input type=button id='buttonId' size=30 value="Next" ><br>
@@ -24,8 +24,8 @@
 </td></tr>
 <tr><td><center><b><font color = 'red'>Braille Pad Emulator</font><font color='green'> &nbsp &nbsp {{ hey }}  </font></center></td></tr>
 <tr><td><center>
-<a  class="myButton" id='buttonId3' width=300 >News</a>
-<a  class="myButton" id='buttonId4' width=300 >Read a Book  </a>
+<a  class="myButton" id='buttonId3' width=300 >Back to News</a>
+ <a  class="myButton" id='buttonId4' width=300 >  Books  </a> 
 </center></td></tr>
 </table ><br><br>
 <br>
@@ -34,7 +34,7 @@
 <!-- <img src="{% static  'a_br.jpg' %}" alt=""  height=100 width=100 /> -->
 <script type="text/javascript">
     document.getElementById("buttonId3").onclick = function () {
-        location.href = "";
+        location.href = "/news/";
         
     };
     document.getElementById("buttonId4").onclick = function () {
@@ -42,11 +42,11 @@
         
     };
     document.getElementById("buttonId").onclick = function () {
-        location.href = "/next/";
+        location.href = "/nextPage/";
         
     };
     document.getElementById("buttonId2").onclick = function () {
-        location.href = "/prev/";
+        location.href = "/prevPage/";
         
     };
       
