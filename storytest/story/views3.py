@@ -5,7 +5,10 @@ import MySQLdb
 import re
 
 no = 22
+bno = 35
+book_title = 0
 url = u'http://timesofindia.indiatimes.com/world/us'
+book_page = "Huckelberry Finn"
 db = MySQLdb.connect("localhost","root","fallcon2015","python123")
 cursor = db.cursor()
 article = Article(url)
@@ -116,47 +119,50 @@ def clickPrevious(request):
 
 def clickNextBook(request):
 	if request.POST.get('click', True):
-		global no
-		global url
-		no +=  1 
-		cursor.execute("select news_data from news where news_id =(%s)", [no])
+		global bno
+		global book_page
+		bno +=  1 
+		global book_title
+		cursor.execute("select text from books where pageNumber =(%s)", [bno])
 		rows = cursor.fetchall()
 		rowss = re.sub(r'\W+', ' ', str(rows))
 		#return HttpResponse("abc")
 		image_array = textToBraille(rowss)
 		print ("=====================================hrichrichrichNEXTheheheh==============================")
 		#print rowss
-		return render_to_response("story/books.html", {'hello': rowss, 'bye' : image_array, 'hey' : url})
+		return render_to_response("story/books.html", {'hello': rowss, 'bye' : image_array, 'hey' : book_page, 'pgno' : bno, 'book_idd' : book_title})
 		#home()
 
 
 def clickPreviousBook(request):
 	if request.POST.get('click', True):
-		global no
-		global url
-		no -=  1 
-		cursor.execute("select news_data from news where news_id =(%s)", [no])
+		global bno
+		global book_page
+		bno -=  1 
+		global book_title
+		cursor.execute("select text from books where pageNumber =(%s)", [bno])
 		rows = cursor.fetchall()
 		rowss = re.sub(r'\W+', ' ', str(rows))
 		#return HttpResponse("abc")
 		image_array = textToBraille(rowss)
 		print ("=====================================richrichrihPREVPREV==============================")
 		#print rowss
-		return render_to_response("story/books.html", {'hello': rowss, 'bye' : image_array, 'hey' : url})
+		return render_to_response("story/books.html", {'hello': rowss, 'bye' : image_array, 'hey' : book_page, 'pgno' : bno, 'book_idd' : book_title})
 		
-def clickBooks(request):
+def clickBooks(request,book_id):
 	if request.POST.get('click', True):
-		global no
-		book_title = "Huckelberry Finn"
-		no -=  1 
-		cursor.execute("select news_data from news where news_id =(%s)", [no])
+		global bno
+		global book_page
+		bno -=  1 
+		book_title = book_id
+		cursor.execute("select text from books where pageNumber =(%s)", [bno])
 		rows = cursor.fetchall()
 		rowss = re.sub(r'\W+', ' ', str(rows))
 		#return HttpResponse("abc")
 		image_array = textToBraille(rowss)
 		print ("=====================================richrichrihPREVPREV==============================")
 		#print rowss
-		return render_to_response("story/books.html", {'hello': rowss, 'bye' : image_array, 'hey' : book_title})
+		return render_to_response("story/books.html", {'hello': rowss, 'bye' : image_array, 'hey' : book_page , 'pgno' : bno , 'book_idd' : book_id})
 
 def home(request):
 	global no

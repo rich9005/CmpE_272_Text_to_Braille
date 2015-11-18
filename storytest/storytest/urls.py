@@ -24,9 +24,9 @@ urlpatterns = patterns('',
 	url(r'^$','story.views3.home',name='home'),
 	url(r'^next/$','story.views3.clickNext',name='clickNext'),
 	url(r'^prev/$','story.views3.clickPrevious',name='clickPrevious'),
-    url(r'^book/$','story.views3.clickBooks',name='clickBooks'),
-    url(r'^nextPage/$','story.views3.clickNextBook',name='clickNext'),
-    url(r'^prevPage/$','story.views3.clickPreviousBook',name='clickPrevious'),
+    url(r'^book/(\d+)/','story.views3.clickBooks',name='clickBooks'),
+    url(r'^nextPage/$','story.views3.clickNextBook',name='clickNextBook'),
+    url(r'^prevPage/$','story.views3.clickPreviousBook',name='clickPreviousBook'),
     url(r'^news/$','story.views3.home',name='home'),
     
 	)
