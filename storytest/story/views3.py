@@ -8,7 +8,7 @@ no = 22
 bno = 35
 book_title = 0
 url = u'http://timesofindia.indiatimes.com/world/us'
-book_page = "Huckelberry Finn"
+
 db = MySQLdb.connect("localhost","root","fallcon2015","python123")
 cursor = db.cursor()
 article = Article(url)
@@ -120,10 +120,13 @@ def clickPrevious(request):
 def clickNextBook(request):
 	if request.POST.get('click', True):
 		global bno
-		global book_page
 		bno +=  1 
-		global book_title
-		cursor.execute("select text from books where pageNumber =(%s)", [bno])
+		book_title
+		if book_title == "1":
+			book_page = "Huckelberry Finn"
+		else:
+			book_page = "The Mad King"
+		cursor.execute("select text from books where pageNumber =(%s) and bookId =(%s)", (bno,book_title))
 		rows = cursor.fetchall()
 		rowss = re.sub(r'\W+', ' ', str(rows))
 		#return HttpResponse("abc")
@@ -137,10 +140,13 @@ def clickNextBook(request):
 def clickPreviousBook(request):
 	if request.POST.get('click', True):
 		global bno
-		global book_page
 		bno -=  1 
-		global book_title
-		cursor.execute("select text from books where pageNumber =(%s)", [bno])
+		book_title
+		if book_title == "1":
+			book_page = "Huckelberry Finn"
+		else:
+			book_page = "The Mad King"
+		cursor.execute("select text from books where pageNumber =(%s) and bookId =(%s)", (bno,book_title))
 		rows = cursor.fetchall()
 		rowss = re.sub(r'\W+', ' ', str(rows))
 		#return HttpResponse("abc")
@@ -152,10 +158,16 @@ def clickPreviousBook(request):
 def clickBooks(request,book_id):
 	if request.POST.get('click', True):
 		global bno
-		global book_page
+		
 		bno -=  1 
 		book_title = book_id
-		cursor.execute("select text from books where pageNumber =(%s)", [bno])
+		global book_title 
+		if book_title == "1":
+			book_page = "Huckelberry Finn"
+		else:
+			book_page = "The Mad King"
+
+		cursor.execute("select text from books where pageNumber =(%s)and bookId =(%s)", (bno,book_title))
 		rows = cursor.fetchall()
 		rowss = re.sub(r'\W+', ' ', str(rows))
 		#return HttpResponse("abc")

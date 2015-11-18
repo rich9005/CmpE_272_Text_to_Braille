@@ -24,11 +24,14 @@
 </td></tr>
 <tr><td><center><b><font color = 'red'>Braille Pad Emulator</font><font color='green'> &nbsp &nbsp {{ hey }}  </font></center></td></tr>
 <tr><td><center>
-<a  class="myButton" id='buttonId3' width=300 >Back to News</a>
- <a  class="myButton" id='buttonId4' width=300 >  Books  </a> 
+
+ <a  class="myButton" id='buttonId4' width=300 >  Book 1  </a> 
+<a  class="myButton" id='buttonId5' width=300 >  Book 2  </a> 
+
 </center></td></tr>
 </table ><br><br>
 <br>
+<a  class="myButton" id='buttonId3' width=300 >Back to News</a>
 <!-- <img src='/static/b_br.jpg' alt=""  height=100 width=100 /> -->
 <br>=====================<br>
 <!-- <img src="{% static  'a_br.jpg' %}" alt=""  height=100 width=100 /> -->
@@ -39,6 +42,10 @@
     };
     document.getElementById("buttonId4").onclick = function () {
         location.href = "/book/1";
+        
+    };
+    document.getElementById("buttonId5").onclick = function () {
+        location.href = "/book/2";
         
     };
     document.getElementById("buttonId").onclick = function () {
