@@ -5,7 +5,10 @@ import MySQLdb
 import re
 
 no = 22
+bno = 35
+book_title = 0
 url = u'http://timesofindia.indiatimes.com/world/us'
+
 db = MySQLdb.connect("localhost","root","fallcon2015","python123")
 cursor = db.cursor()
 article = Article(url)
@@ -14,7 +17,7 @@ article.html
 article.parse()
 x = article.authors
 print x
-print 'hi'
+print (url)
 #print article.summary
 #y = "<center><h2>Top News</h2></center><table border=1>"
 #start1 = "<tr><td>"
@@ -33,7 +36,7 @@ for x in article.text.encode("utf-8").split("|"):
 #	try:
 		y = x
 		cursor.execute("insert into news(news_data) values (%s)",[y])
-		print ("Hi---",y)
+		#print ("Hi---",y)
 		db.commit()
 
 
@@ -44,8 +47,36 @@ rows = cursor.fetchall()
 rowss = re.sub(r'\W+', ' ', str(rows))
 print rowss
 
-rowss_value = "Test braille values"
+testStr = " "
+rows_array  = rowss.split()
+for word in rows_array:
+	for c in word:
+		c_lower = c.lower()
+		tc = "/static/braille-alphabet-flashcard-"+c_lower+".jpg"
+		print tc
+		testStr += tc + " "
+	testStr += "/static/braille-alphabet-flashcard-space.jpg" + " "
+print (testStr)
 
+
+
+#rowss_value = "Test braille values"
+#image_string = "/static/a_br.jpg /static/b_br.jpg"
+def textToBraille(rowss):
+	testStr = " "
+	rows_array  = rowss.split()
+	for word in rows_array:
+		for c in word:
+			c_lower = c.lower()
+			tc = "/static/braille-alphabet-flashcard-"+c_lower+".jpg"
+			#print tc
+			testStr += tc + " "
+		testStr += "/static/braille-alphabet-flashcard-space.jpg" + " "
+
+	image_string = testStr
+	image_array = image_string.split()
+	print(image_array)
+	return image_array
 #def home(request):
 #	return HttpResponse("Hello world!")
 # Create your views here.
@@ -59,28 +90,99 @@ rowss_value = "Test braille values"
 def clickNext(request):
 	if request.POST.get('click', True):
 		global no
+		global url
 		no +=  1 
 		cursor.execute("select news_data from news where news_id =(%s)", [no])
 		rows = cursor.fetchall()
 		rowss = re.sub(r'\W+', ' ', str(rows))
 		#return HttpResponse("abc")
+		image_array = textToBraille(rowss)
 		print ("=====================================hrichrichrichNEXTheheheh==============================")
 		#print rowss
-		return render_to_response("story/home.html", {'hello': rowss, 'bye' : rowss_value})
+		return render_to_response("story/home.html", {'hello': rowss, 'bye' : image_array, 'hey' : url})
 		#home()
 
 
 def clickPrevious(request):
 	if request.POST.get('click', True):
 		global no
+		global url
 		no -=  1 
 		cursor.execute("select news_data from news where news_id =(%s)", [no])
 		rows = cursor.fetchall()
 		rowss = re.sub(r'\W+', ' ', str(rows))
 		#return HttpResponse("abc")
+		image_array = textToBraille(rowss)
 		print ("=====================================richrichrihPREVPREV==============================")
 		#print rowss
-		return render_to_response("story/home.html", {'hello': rowss, 'bye' : rowss_value})
+		return render_to_response("story/home.html", {'hello': rowss, 'bye' : image_array, 'hey' : url})
+
+def clickNextBook(request):
+	if request.POST.get('click', True):
+		global bno
+		bno +=  1 
+		book_title
+		if book_title == "1":
+			book_page = "Huckelberry Finn"
+		else:
+			book_page = "The Mad King"
+		cursor.execute("select text from books where pageNumber =(%s) and bookId =(%s)", (bno,book_title))
+		rows = cursor.fetchall()
+		rowss = re.sub(r'\W+', ' ', str(rows))
+		#return HttpResponse("abc")
+		image_array = textToBraille(rowss)
+		print ("=====================================hrichrichrichNEXTheheheh==============================")
+		#print rowss
+		return render_to_response("story/books.html", {'hello': rowss, 'bye' : image_array, 'hey' : book_page, 'pgno' : bno, 'book_idd' : book_title})
+		#home()
+
+
+def clickPreviousBook(request):
+	if request.POST.get('click', True):
+		global bno
+		bno -=  1 
+		book_title
+		if book_title == "1":
+			book_page = "Huckelberry Finn"
+		else:
+			book_page = "The Mad King"
+		cursor.execute("select text from books where pageNumber =(%s) and bookId =(%s)", (bno,book_title))
+		rows = cursor.fetchall()
+		rowss = re.sub(r'\W+', ' ', str(rows))
+		#return HttpResponse("abc")
+		image_array = textToBraille(rowss)
+		print ("=====================================richrichrihPREVPREV==============================")
+		#print rowss
+		return render_to_response("story/books.html", {'hello': rowss, 'bye' : image_array, 'hey' : book_page, 'pgno' : bno, 'book_idd' : book_title})
+		
+def clickBooks(request,book_id):
+	if request.POST.get('click', True):
+		global bno
+		
+		bno -=  1 
+		book_title = book_id
+		global book_title 
+		if book_title == "1":
+			book_page = "Huckelberry Finn"
+		else:
+			book_page = "The Mad King"
+
+		cursor.execute("select text from books where pageNumber =(%s)and bookId =(%s)", (bno,book_title))
+		rows = cursor.fetchall()
+		rowss = re.sub(r'\W+', ' ', str(rows))
+		#return HttpResponse("abc")
+		image_array = textToBraille(rowss)
+		print ("=====================================richrichrihPREVPREV==============================")
+		#print rowss
+		return render_to_response("story/books.html", {'hello': rowss, 'bye' : image_array, 'hey' : book_page , 'pgno' : bno , 'book_idd' : book_id})
 
 def home(request):
-	return render_to_response("story/home.html", {'hello': rowss, 'bye' : rowss_value})
+	global no
+	global url
+	cursor.execute("select news_data from news where news_id =(%s)", [no])
+	rows = cursor.fetchall()
+	rowss = re.sub(r'\W+', ' ', str(rows))
+	image_array = textToBraille(rowss)
+	return render_to_response("story/home.html", {'hello': rowss, 'bye' : image_array, 'hey' : url })
+
+

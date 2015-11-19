@@ -1,11 +1,15 @@
+{% load staticfiles %}
+
 <html>
 <head>
-<title> This is my news app! </title>
+<title> This is my rich app! </title>
 
-
+<link rel="stylesheet" type="text/css" href="/static/table.css">
+<link rel="icon" type="image/png" href="/static/rich_braill.png">
 </head>
 <center>
-<h1> Welcome to Braille-News-App!</h1><br><br><br>
+<h1> Welcome to Braille-App!</h1>
+<body bgcolor='#c2c2d6' > 
 {% block content %}
 {% endblock %}
 </body>
