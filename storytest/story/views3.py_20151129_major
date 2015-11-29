@@ -105,15 +105,15 @@ def clickPrevious(request):
 		#print rowss
 		return render_to_response("story/home.html", {'hello': rowss, 'bye' : image_array, 'hey' : url_ip})
 
-def clickNextBook(request,bnop,book_id):
+def clickNextBook(request,bnop):
 	if request.POST.get('click', True):
 		bno = int(bnop)
 		bno +=  1 
-		book_title = book_id
+		book_title
 		if book_title == "1":
-			book_page = "Huckelberry Finn (" +url_ip+ ")"
+			book_page = "Huckelberry Finn" 
 		else:
-			book_page = "The Mad King (" +url_ip+ ")" 
+			book_page = "The Mad King" 
 		cursor.execute("select text from books where pageNumber =(%s) and bookId =(%s)", (bno,book_title))
 		rows = cursor.fetchall()
 		rowss = re.sub(r'\W+', ' ', str(rows))
@@ -125,15 +125,15 @@ def clickNextBook(request,bnop,book_id):
 		#home()
 
 
-def clickPreviousBook(request,bno,book_id):
+def clickPreviousBook(request,bno):
 	if request.POST.get('click', True):
 		bno = int(bno)
 		bno -=  1
-		book_title = book_id
+		book_title
 		if book_title == "1":
-			book_page = "Huckelberry Finn (" +url_ip+ ")"
+			book_page = "Huckelberry Finn"
 		else:
-			book_page = "The Mad King (" +url_ip+ ")"
+			book_page = "The Mad King"
 		cursor.execute("select text from books where pageNumber =(%s) and bookId =(%s)", (bno,book_title))
 		rows = cursor.fetchall()
 		rowss = re.sub(r'\W+', ' ', str(rows))
@@ -151,9 +151,9 @@ def clickBooks(request,book_id):
 		book_title = book_id
 		global book_title 
 		if book_title == "1":
-			book_page = "Huckelberry Finn (" +url_ip+ ")"
+			book_page = "Huckelberry Finn"
 		else:
-			book_page = "The Mad King (" +url_ip+ ")"
+			book_page = "The Mad King"
 
 		cursor.execute("select text from books where pageNumber =(%s)and bookId =(%s)", (bno,book_title))
 		rows = cursor.fetchall()

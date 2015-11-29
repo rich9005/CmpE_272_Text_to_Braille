@@ -42,7 +42,7 @@
     };
 
     var page_no = {{ pgno | safe}}
-    var book_id = {{ book_idd | safe }}
+
     document.getElementById("buttonId4").onclick = function () {
         location.href = "/book/1";
         
@@ -52,11 +52,11 @@
         
     };
     document.getElementById("buttonId").onclick = function () {
-        location.href = "/nextPage/" +page_no+ "/" +book_id;
+        location.href = "/nextPage/" +page_no;
         
     };
     document.getElementById("buttonId2").onclick = function () {
-        location.href = "/prevPage/" +page_no+ "/" +book_id;
+        location.href = "/prevPage/" +page_no;
         
     };
       
