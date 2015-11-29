@@ -28,5 +28,5 @@ urlpatterns = patterns('',
     url(r'^nextPage/$','story.views3.clickNextBook',name='clickNextBook'),
     url(r'^prevPage/$','story.views3.clickPreviousBook',name='clickPreviousBook'),
     url(r'^news/$','story.views3.home',name='home'),
-    
+    url(r'^admin/',include(admin.site.urls)),
 	)
