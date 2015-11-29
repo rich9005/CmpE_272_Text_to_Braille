@@ -1,16 +1,23 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
+from newspaper import Article
 import MySQLdb
 import re
-import socket
-
 
 no = 22
 bno = 35
 book_title = 0
-url_ip = socket.gethostbyname(socket.gethostname())
+url = u'http://timesofindia.indiatimes.com/world/us'
+
 db = MySQLdb.connect("localhost","root","fallcon2015","python123")
 cursor = db.cursor()
+article = Article(url)
+article.download()
+article.html
+article.parse()
+x = article.authors
+print x
+print (url)
 #print article.summary
 #y = "<center><h2>Top News</h2></center><table border=1>"
 #start1 = "<tr><td>"
@@ -25,12 +32,17 @@ cursor = db.cursor()
 #			i = i + 1
 #abc = y + z
 #print (abc)
+for x in article.text.encode("utf-8").split("|"):
 #	try:
+		y = x
+		cursor.execute("insert into news(news_data) values (%s)",[y])
+		#print ("Hi---",y)
+		db.commit()
 
 
 print ("======================")
 
-cursor.execute("select news_data from news1 where news_id =(%s)", [no])
+cursor.execute("select news_data from news where news_id =(%s)", [no])
 rows = cursor.fetchall()
 rowss = re.sub(r'\W+', ' ', str(rows))
 print rowss
@@ -78,32 +90,32 @@ def textToBraille(rowss):
 def clickNext(request):
 	if request.POST.get('click', True):
 		global no
-		global url_ip
+		global url
 		no +=  1 
-		cursor.execute("select news_data from news1 where news_id =(%s)", [no])
+		cursor.execute("select news_data from news where news_id =(%s)", [no])
 		rows = cursor.fetchall()
 		rowss = re.sub(r'\W+', ' ', str(rows))
 		#return HttpResponse("abc")
 		image_array = textToBraille(rowss)
 		print ("=====================================hrichrichrichNEXTheheheh==============================")
 		#print rowss
-		return render_to_response("story/home.html", {'hello': rowss, 'bye' : image_array, 'hey' : url_ip})
+		return render_to_response("story/home.html", {'hello': rowss, 'bye' : image_array, 'hey' : url})
 		#home()
 
 
 def clickPrevious(request):
 	if request.POST.get('click', True):
 		global no
-		global url_ip
+		global url
 		no -=  1 
-		cursor.execute("select news_data from news1 where news_id =(%s)", [no])
+		cursor.execute("select news_data from news where news_id =(%s)", [no])
 		rows = cursor.fetchall()
 		rowss = re.sub(r'\W+', ' ', str(rows))
 		#return HttpResponse("abc")
 		image_array = textToBraille(rowss)
 		print ("=====================================richrichrihPREVPREV==============================")
 		#print rowss
-		return render_to_response("story/home.html", {'hello': rowss, 'bye' : image_array, 'hey' : url_ip})
+		return render_to_response("story/home.html", {'hello': rowss, 'bye' : image_array, 'hey' : url})
 
 def clickNextBook(request):
 	if request.POST.get('click', True):
@@ -166,11 +178,11 @@ def clickBooks(request,book_id):
 
 def home(request):
 	global no
-	global url_ip
-	cursor.execute("select news_data from news1 where news_id =(%s)", [no])
+	global url
+	cursor.execute("select news_data from news where news_id =(%s)", [no])
 	rows = cursor.fetchall()
 	rowss = re.sub(r'\W+', ' ', str(rows))
 	image_array = textToBraille(rowss)
-	return render_to_response("story/home.html", {'hello': rowss, 'bye' : image_array, 'hey' : url_ip })
+	return render_to_response("story/home.html", {'hello': rowss, 'bye' : image_array, 'hey' : url })
 
 
