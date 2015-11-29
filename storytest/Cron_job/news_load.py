@@ -14,9 +14,12 @@ print x
 print (url)
 i = 1
 for x in article.text.encode("utf-8").split("|"):
-#       try:
                 y = x
-                cursor.execute("update news1 set news_data = (%s) where news_id =(%s)",[y , i])
-                #print ("Hi---",y)
-                db.commit()
-                i += 1
+                if y.isspace() or len(y) > 100 :
+                        print ("null")
+                else :
+                        print (len(y))
+                        print y
+                        cursor.execute("update news1 set news_data = (%s) where news_id =(%s)",[y , i])
+                        db.commit()
+                        i += 1
