@@ -42,12 +42,14 @@
         location.href = "/book/1";
         
     };
+    var r_id = {{ row_id | safe }}
+
     document.getElementById("buttonId").onclick = function () {
-        location.href = "/next/";
+        location.href = "/next/" +r_id;
         
     };
     document.getElementById("buttonId2").onclick = function () {
-        location.href = "/prev/";
+        location.href = "/prev/" +r_id;
         
     };
       

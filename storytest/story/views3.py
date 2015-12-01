@@ -75,11 +75,12 @@ def textToBraille(rowss):
 	#x = "<table> <tr><td>1</td><td>thisi is one</td></tr><tr><td>2</td><td>this is two</td></tr>"
 	#abc = y + z
 #	return HttpResponse(abc)
-def clickNext(request):
+def clickNext(request,row_id):
 	if request.POST.get('click', True):
-		global no
+		no = int(row_id)
 		global url_ip
 		no +=  1 
+		no = str(no)
 		cursor.execute("select news_data from news1 where news_id =(%s)", [no])
 		rows = cursor.fetchall()
 		rowss = re.sub(r'\W+', ' ', str(rows))
@@ -87,23 +88,29 @@ def clickNext(request):
 		image_array = textToBraille(rowss)
 		print ("=====================================hrichrichrichNEXTheheheh==============================")
 		#print rowss
-		return render_to_response("story/home.html", {'hello': rowss, 'bye' : image_array, 'hey' : url_ip})
+		return render_to_response("story/home.html", {'hello': rowss, 'bye' : image_array, 'hey' : url_ip,'row_id' : no})
 		#home()
 
 
-def clickPrevious(request):
+def clickPrevious(request, row_id):
 	if request.POST.get('click', True):
-		global no
+		no = int(row_id)
 		global url_ip
-		no -=  1 
-		cursor.execute("select news_data from news1 where news_id =(%s)", [no])
-		rows = cursor.fetchall()
-		rowss = re.sub(r'\W+', ' ', str(rows))
-		#return HttpResponse("abc")
-		image_array = textToBraille(rowss)
-		print ("=====================================richrichrihPREVPREV==============================")
-		#print rowss
-		return render_to_response("story/home.html", {'hello': rowss, 'bye' : image_array, 'hey' : url_ip})
+		if no >=2 :
+			no -=  1 
+			no = str(no)
+			cursor.execute("select news_data from news1 where news_id =(%s)", [no])
+			rows = cursor.fetchall()
+			rowss = re.sub(r'\W+', ' ', str(rows))
+			#return HttpResponse("abc")
+			image_array = textToBraille(rowss)
+			print ("=====================================richrichrihPREVPREV==============================")
+			#print rowss
+			return render_to_response("story/home.html", {'hello': rowss, 'bye' : image_array, 'hey' : url_ip ,'row_id' : no})
+		else :
+			rowss = " No more Previous news Press next "
+			image_array = textToBraille(rowss)
+			return render_to_response("story/home.html", {'hello': rowss, 'bye' : image_array, 'hey' : url_ip ,'row_id' : no})
 
 def clickNextBook(request,bnop,book_id):
 	if request.POST.get('click', True):
@@ -111,9 +118,9 @@ def clickNextBook(request,bnop,book_id):
 		bno +=  1 
 		book_title = book_id
 		if book_title == "1":
-			book_page = "Huckelberry Finn (" +url_ip+ ")"
+			book_page = "Huckelberry Finn (" +url_ip+ ")" 
 		else:
-			book_page = "The Mad King (" +url_ip+ ")" 
+			book_page = "The Mad King (" +url_ip+ ")"
 		cursor.execute("select text from books where pageNumber =(%s) and bookId =(%s)", (bno,book_title))
 		rows = cursor.fetchall()
 		rowss = re.sub(r'\W+', ' ', str(rows))
@@ -151,9 +158,9 @@ def clickBooks(request,book_id):
 		book_title = book_id
 		global book_title 
 		if book_title == "1":
-			book_page = "Huckelberry Finn (" +url_ip+ ")"
+			book_page = "Huckelberry Finn"
 		else:
-			book_page = "The Mad King (" +url_ip+ ")"
+			book_page = "The Mad King"
 
 		cursor.execute("select text from books where pageNumber =(%s)and bookId =(%s)", (bno,book_title))
 		rows = cursor.fetchall()
@@ -171,6 +178,6 @@ def home(request):
 	rows = cursor.fetchall()
 	rowss = re.sub(r'\W+', ' ', str(rows))
 	image_array = textToBraille(rowss)
-	return render_to_response("story/home.html", {'hello': rowss, 'bye' : image_array, 'hey' : url_ip })
+	return render_to_response("story/home.html", {'hello': rowss, 'bye' : image_array, 'hey' : url_ip ,'row_id' : no})
 
 
